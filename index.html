@@ -916,7 +916,7 @@ footer {
   </div>
 
   <div class="hero-ctas">
-    <a href="#video" class="btn btn-outline">▶ Watch Strategy</a>
+    <a href="#video" onclick="openVideo()" class="btn btn-outline">▶ Watch Strategy</a>
     <a href="#enroll" class="btn btn-gold">Join Now — Get 20% OFF</a>
   </div>
 
@@ -970,12 +970,12 @@ footer {
       <div class="video-wrap">
         <!-- ⚠ REPLACE: Paste your YouTube embed iframe here -->
         <!-- Example: <iframe width="100%" height="100%" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe> -->
-        <div class="video-overlay">
-          <div class="video-play">
+        <div class="video-overlay" onclick="openVideo()">
+          <div class="video-play" style="cursor:pointer;">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="#060810"><polygon points="5,3 19,12 5,21"/></svg>
           </div>
           <div class="video-label">DMT Strategy Explanation</div>
-          <div class="video-placeholder-text">⚠ Replace with your YouTube embed URL</div>
+          <div class="video-placeholder-text">Click to watch — or add your YouTube URL</div>
         </div>
       </div>
     </div>
@@ -1353,7 +1353,7 @@ footer {
         <div class="pay-name">Stripe</div>
         <div class="pay-desc">International card payments. Visa, Mastercard, Amex. USD accepted. Secure checkout.</div>
         <!-- ⚠ REPLACE href with your Stripe payment link -->
-        <a href="#" class="btn btn-gold btn-sm">Pay with Card</a>
+        <a href="https://wa.me/9779810058729?text=Hi%20Professor%20Iftekhar%2C%20I%20want%20to%20pay%20via%20Stripe%20%2F%20Credit%20Card%20(USD).%20Code%3A%20DMT2026.%20Please%20send%20me%20the%20card%20payment%20link." target="_blank" class="btn btn-gold btn-sm">Pay with Card →</a>
       </div>
       <div class="pay-card reveal d4">
         <div class="pay-icon">💬</div>
@@ -1400,7 +1400,7 @@ footer {
 
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
         <!-- ⚠ REPLACE: Link to your actual Google Form -->
-        <a href="#" class="btn btn-outline btn-sm">📋 Open Google Form →</a>
+        <a href="https://wa.me/9779810058729?text=Hi%20Professor%20Iftekhar%2C%20I%20want%20to%20enrol%20in%20DMT.%20Code%3A%20DMT2026.%20Please%20send%20me%20the%20enrolment%20form." target="_blank" class="btn btn-outline btn-sm">📋 Enrol via WhatsApp →</a>
         <a href="https://wa.me/9779810058729?text=Hi%20Professor%20Iftekhar%2C%20I%20am%20ready%20to%20enrol.%20Code%3A%20DMT2026.%20Please%20share%20next%20steps." target="_blank" class="btn btn-wa btn-sm">💬 WhatsApp Instead</a>
       </div>
     </div>
@@ -1735,7 +1735,25 @@ footer {
   </div>
 </div>
 
-<!-- MODAL -->
+<!-- VIDEO MODAL -->
+<div class="modal-overlay" id="videoModal" style="z-index:9100;">
+  <div style="background:#000;border:1px solid rgba(201,168,76,0.3);max-width:820px;width:100%;position:relative;animation:modalPop .3s ease;">
+    <button onclick="closeVideo()" style="position:absolute;top:-18px;right:-18px;width:36px;height:36px;border-radius:50%;background:var(--g1);border:none;color:#060810;font-size:1.1rem;cursor:pointer;font-weight:900;z-index:10;line-height:1;">✕</button>
+    <!-- VIDEO CONTENT: shows YouTube embed if URL is set, else WhatsApp CTA -->
+    <div id="videoContent" style="aspect-ratio:16/9;background:#0a0f1e;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:40px;">
+      <div style="font-size:3rem;">📹</div>
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:#fff;text-align:center;">DMT Strategy Explanation</h3>
+      <p style="font-size:.9rem;color:var(--muted);text-align:center;max-width:420px;line-height:1.65;">Professor Iftekhar hasn't uploaded the public strategy video yet. Join the free WhatsApp chat to get a <strong style="color:var(--g1);">personal walkthrough</strong> of the DMT system right now.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+        <a href="https://wa.me/9779810058729?text=Hi%20Professor%20Iftekhar%2C%20I%20watched%20the%20DMT%20strategy%20video%20and%20want%20to%20learn%20more.%20Can%20you%20walk%20me%20through%20the%20system%3F" target="_blank" onclick="closeVideo()" class="btn btn-wa">💬 Get a Personal Walkthrough</a>
+        <button onclick="closeVideo()" class="btn btn-outline btn-sm">Close</button>
+      </div>
+      <p style="font-size:.72rem;color:var(--muted);text-align:center;font-style:italic;">To add your YouTube video: replace the modal content with an iframe embed</p>
+    </div>
+  </div>
+</div>
+
+<!-- ENROL MODAL -->
 <div class="modal-overlay" id="enrolModal">
   <div class="modal">
     <button class="modal-x" onclick="closeModal()">✕</button>
@@ -1793,7 +1811,34 @@ function runCountdown(hId, mId, sId) {
 runCountdown('cdH','cdM','cdS');
 runCountdown('cdH2','cdM2','cdS2');
 
-/* ── COPY CODE ── */
+/* ── VIDEO MODAL ── */
+// ⚠ TO ADD REAL VIDEO: replace null below with your YouTube video ID string
+// Example: const YT_VIDEO_ID = 'dQw4w9WgXcQ';
+const YT_VIDEO_ID = null;
+
+function openVideo(){
+  const modal = document.getElementById('videoModal');
+  const content = document.getElementById('videoContent');
+  if(YT_VIDEO_ID){
+    content.innerHTML = `<iframe width="100%" height="100%" style="position:absolute;inset:0;border:none;" src="https://www.youtube.com/embed/${YT_VIDEO_ID}?autoplay=1&rel=0" allow="autoplay;encrypted-media" allowfullscreen></iframe>`;
+    content.style.cssText = 'aspect-ratio:16/9;position:relative;';
+  }
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeVideo(){
+  const modal = document.getElementById('videoModal');
+  const content = document.getElementById('videoContent');
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+  // Stop video if playing
+  if(YT_VIDEO_ID) content.innerHTML = '';
+}
+document.getElementById('videoModal').addEventListener('click', e => {
+  if(e.target === document.getElementById('videoModal')) closeVideo();
+});
+
+
 function copyCode(){
   try{navigator.clipboard.writeText('DMT2026');}catch(e){}
   const el = document.getElementById('codeEl');
